@@ -1,0 +1,105 @@
+//Creating a calculator
+import javafx.application.*;
+import javafx.scene.*;
+import javafx.stage.*;
+import javafx.geometry.*;
+import javafx.scene.layout.*;
+import javafx.scene.control.*;
+import javafx.event.*;
+public class Calculator extends Application
+{
+	public static void main(String args[]) 
+	{
+		launch(args);
+	}
+	public void start(Stage st)throws Exception
+	{
+		Label l1=new Label("?");
+		l1.setAlignment(Pos.CENTER);
+		l1.setStyle("-fx-border-color:#000;-fx-padding:5px;");
+		TextField t1=new TextField();
+		TextField t2=new TextField();
+		Button b1=new Button("+");
+		Button b2=new Button("-");
+		Button b3=new Button("*");
+		Button b4=new Button("/");
+		Button clear=new Button("Clear");
+		GridPane root=new GridPane();
+		root.setAlignment(Pos.CENTER);
+		root.setHgap(10);
+		root.setVgap(10);
+		root.add(b1,0,0);
+		root.add(b2,1,0);
+		root.add(b3,0,1);
+		root.add(b4,1,1);
+		root.add(t1,0,2);
+		root.add(t2,1,2);
+		root.add(l1,0,3,2,1);
+		root.add(clear,0,4,2,1);
+		t1.setPrefWidth(70);
+		t2.setPrefWidth(70);
+		b1.setPrefWidth(70);
+		b2.setPrefWidth(70);
+		b3.setPrefWidth(70);
+		b4.setPrefWidth(70);
+		clear.setPrefWidth(150);
+		l1.setPrefWidth(150);
+		EventHandler<ActionEvent> e=new EventHandler<ActionEvent>(){
+			public void handle(ActionEvent ae)
+			{
+				String num1=t1.getText();
+				String num2=t2.getText();
+				int a,b,res;
+				char sym;
+				if(ae.getSource()==clear||num1.equals("")||num2.equals(""))
+				{
+					t1.setText("");
+					t2.setText("");
+					l1.setText("?");
+					t1.requestFocus();
+					return;
+				}
+				else{
+				if(ae.getSource()==b1)
+				{
+					a=Integer.parseInt(num1);
+					b=Integer.parseInt(num2);
+					sym='+';
+					res=a+b;
+				}
+				else if(ae.getSource()==b2)
+				{
+					a=Integer.parseInt(num1);
+					b=Integer.parseInt(num2);
+					sym='-';
+					res=a-b;
+				}
+				else if(ae.getSource()==b3)
+				{
+					a=Integer.parseInt(num1);
+					b=Integer.parseInt(num2);
+					sym='*';
+					res=a*b;
+				}
+				else
+				{
+					a=Integer.parseInt(num1);
+					b=Integer.parseInt(num2);
+					sym='/';
+					res=a/b;
+				}
+				l1.setText(""+a+sym+b+" = "+res);
+				}
+			}
+		};
+		b1.setOnAction(e);
+		b2.setOnAction(e);
+		b3.setOnAction(e);
+		b4.setOnAction(e);
+		clear.setOnAction(e);
+		Scene s=new Scene(root,300,250);
+		st.setTitle("Calculator");
+		st.setScene(s);
+		st.show();
+	}
+}
